@@ -1,3 +1,4 @@
+import path from "path";
 import express, { Request, Response } from "express";
 import { routeHello, routeAPINames, routeWeather } from "./routes.js";
 
@@ -26,6 +27,13 @@ server.get(
         res.send(response);
     });
 
-server.listen(port, function () {
+server.get("/components/weather", function (req: Request, res: Response):
+    void {
+    const filePath = path.join(process.cwd(), "public", "weather.html");
+    res.setHeader("Content-Type", "text/html");
+    res.sendFile(filePath);
+});
+
+server.listen(port, function (): void {
     console.log('Listening on ' + port);
 });
