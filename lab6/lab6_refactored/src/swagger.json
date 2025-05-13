@@ -1,0 +1,160 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Приклад Next.js - OpenAPI 3.x",
+    "description": "Приклад API з додатка Next.js",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/"
+    }
+  ],
+  "paths": {
+    "/v1/weather/{zipcode}": {
+      "get": {
+        "summary": "Отримати погоду за поштовим індексом",
+        "parameters": [
+          {
+            "name": "zipcode",
+            "in": "path",
+            "description": "Поштовий індекс",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "96815"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успішна операція",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/weatherDetailType"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Невірний запит"
+          },
+          "500": {
+            "description": "Внутрішня помилка сервера"
+          }
+        }
+      },
+      "post": {
+        "summary": "Додати новий запис погоди",
+        "parameters": [
+          {
+            "name": "zipcode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/weatherDetailType"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Створено"
+          },
+          "400": {
+            "description": "Невірний запит"
+          }
+        }
+      },
+      "put": {
+        "summary": "Оновити запис погоди",
+        "parameters": [
+          {
+            "name": "zipcode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/weatherDetailType"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Оновлено"
+          },
+          "400": {
+            "description": "Невірний запит"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Видалити запис погоди",
+        "parameters": [
+          {
+            "name": "zipcode",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Видалено"
+          },
+          "400": {
+            "description": "Невірний запит"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "weatherDetailType": {
+        "type": "object",
+        "required": [
+          "zipcode",
+          "weather",
+          "temp"
+        ],
+        "properties": {
+          "zipcode": {
+            "type": "string",
+            "example": "96815"
+          },
+          "weather": {
+            "type": "string",
+            "example": "sunny"
+          },
+          "temp": {
+            "type": "integer",
+            "format": "int64",
+            "example": 35
+          }
+        }
+      }
+    }
+  }
+}
